@@ -3,7 +3,10 @@ class File:
         self.name = name
         self.content = content
 
-    def commit(self, name, content):
+    def commit(self):
+        with open(f'files/text/{self.name}.txt', 'w') as file:
+            content = ''.join(self.content)
+            file.write(content)
         pass
 
     def read(self):

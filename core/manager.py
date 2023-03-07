@@ -22,8 +22,9 @@ class FileManager:
         while line := input():
             if line == "SAVE()":
                 file_name = input('Enter a name or lave it empty for default\n:')
-                self.files_data.append(self.files_types[format](name=file_name,content=content))
-                print(self.files_data[0].name)
+                new = self.files_types[format](name=file_name,content=content)
+                new.commit()
+                self.files_data.append(new)
                 break
             elif line == "CLOSE()":
                 self.run()
