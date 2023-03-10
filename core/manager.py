@@ -55,7 +55,7 @@ class FileManager:
 
     @property
     def files_data(self):
-        if not self._files_data.__len__() == 0:
+        if self._files_data.__len__() == 0:
             print("Retrieving The Data...")
             self._files_data = []
         return self._files_data

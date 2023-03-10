@@ -1,9 +1,11 @@
+import random
+import string
 from datetime import datetime
 
 
 class File:
     def __init__(self, name=None, content=[]):
-        self.name = name
+        self.name = name or default_name()
         self.content = content
 
     def commit(self):
@@ -31,3 +33,14 @@ class TextFile(File):
 
     def __init__(self, name, content):
         super().__init__(name, content)
+
+
+def default_name(length=8):
+    name = [
+        *list(string.ascii_lowercase),
+        *list(string.ascii_uppercase),
+        *list(string.digits)
+    ]
+    random.shuffle(name)
+    return ''.join(name[:length])
+    
