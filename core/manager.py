@@ -1,5 +1,8 @@
-from base import TextFile
 import sys
+
+from base import TextFile
+from models import FileModel
+
 
 class FileManager:
     files_types = {"text": TextFile}
@@ -8,25 +11,27 @@ class FileManager:
         self._files_data = []
 
     def search_files(self, format=None):
+        search_query = input("Enter the file name")
         self.run()
 
-    def display_all_files(self):
-        for file in self.files_data:
-            print(file)
-            self.run()
+    def display_files(self):
+        for index, file in enumerate(self.files_data):
+            print("{}: {}.{}".format(index + 1, file.name, file.format))
+
+        return self.run()
 
     def new_file(self):
         print("For save type SAVE() for close CLOSE()")
         print("================================================")
         content = []
-        format = input("chose save format ({}) ".format(", ".join(self.files_types.keys())))
+        format = input("chose save format ({}) ".format(", ".join(self.files_types.keys()))).lower()
         while line := input("_ "):
             if line == "SAVE()":
                 file_name = input("Enter a name or lave it empty for default: ")
                 new = self.files_types[format](name=file_name, content=content)
                 new.commit()
-                new.read()
                 self.files_data.append(new)
+                new.read()
                 input()
                 break
             elif line == "CLOSE()":
@@ -40,25 +45,31 @@ class FileManager:
             "for new file => n\nfor displaying all files => d\nfor search files => s\nfor exit => e"
         )
         print("================================================")
-        option = input('> ').lower()
-        if option == 'n':
+        option = input("> ").lower()
+        if option == "n":
             self.new_file()
-        elif option == 'd':
-            self.display_all_files()
-        elif option == 's':
+        elif option == "d":
+            self.display_files()
+        elif option == "s":
             self.search_files()
-        elif option == 'e':
+        elif option == "e":
             sys.exit()
         else:
             self.run()
-
 
     @property
     def files_data(self):
         if self._files_data.__len__() == 0:
             print("Retrieving The Data...")
-            self._files_data = []
+            self._files_data = FileModel.objects.select(
+                [
+                    "name",
+                    "timestamp",
+                    "format",
+                ]
+            )
         return self._files_data
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     FileManager().run()

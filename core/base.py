@@ -1,6 +1,14 @@
 import random
 import string
+import sys
 from datetime import datetime
+from pathlib import Path
+
+# BASE_DIR = Path(__file__).resolve().parent.parent
+# print(BASE_DIR)
+# sys.path.append('/Users/MyPc/Desktop/master/oop/files manager')
+# sys.path.append('../')
+from models import FileModel
 
 
 class File:
@@ -10,10 +18,16 @@ class File:
 
     def commit(self):
         with open(self.path, "w") as file:
-            self.content.append("\n\n\n{0:%Y-%m-%d %I:%M%p}".format(datetime.now()))
+            now = datetime.now()
+            self.content.append("\n\n\n{0:%Y-%m-%d %I:%M%p}".format(now))
             content = "".join(self.content)
             file.write(content)
             file.close()
+            FileModel.objects.bulk_insert(
+                [
+                    {'name':self.name ,'format':self.format ,'timestamp':now}
+                ]
+            )
 
     def read(self):
         with open(self.path, "r") as file:
