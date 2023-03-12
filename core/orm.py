@@ -42,7 +42,6 @@ class BaseManager:
         is_fetching_completed = False
         while not is_fetching_completed:
             result = cursor.fetchmany(size=chunk_size)
-            print(result)
             for row_values in result:
                 keys, values = field_names, row_values
                 row_data = dict(zip(keys, values))
@@ -142,11 +141,11 @@ class BaseModel(metaclass=MetaModel):
 
 # ----------------------- Setup ----------------------- #
 DB_SETTINGS = {
-    "host": "localhost",
-    "port": "5432",
-    "database": "files_manager",
-    "user": "postgres",
-    "password": "1111",
+    "host": "",
+    "port": "",
+    "database": "",
+    "user": "",
+    "password": "",
 }
 
 BaseManager.set_connection(database_settings=DB_SETTINGS)

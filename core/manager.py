@@ -5,20 +5,24 @@ from models import FileModel
 
 
 class FileManager:
-    files_types = {"text": TextFile}
+    files_types = {"txt": TextFile}
 
     def __init__(self):
         self._files_data = []
 
     def search_files(self, format=None):
         search_query = input("Enter the file name")
+        for file in self.files_data:
+            if file.name == search_query:
+                self.files_types[file.format](file.name, []).read()
+        input("\n")
         self.run()
 
     def display_files(self):
         for index, file in enumerate(self.files_data):
             print("{}: {}.{}".format(index + 1, file.name, file.format))
-
-        return self.run()
+        input("\n")
+        self.run()
 
     def new_file(self):
         print("For save type SAVE() for close CLOSE()")
@@ -42,9 +46,14 @@ class FileManager:
 
     def run(self):
         print(
-            "for new file => n\nfor displaying all files => d\nfor search files => s\nfor exit => e"
+            """
+            ===== Files Manager =====
+            for new file => n
+            for displaying all files => d
+            for search files => s
+            for exit => e
+        """
         )
-        print("================================================")
         option = input("> ").lower()
         if option == "n":
             self.new_file()
