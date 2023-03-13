@@ -141,11 +141,11 @@ class BaseModel(metaclass=MetaModel):
 
 # ----------------------- Setup ----------------------- #
 DB_SETTINGS = {
-    "host": "",
-    "port": "",
-    "database": "",
-    "user": "",
-    "password": "",
+    "host": "localhost",
+    "port": "5432",
+    "database": "files_manager",
+    "user": "postgres",
+    "password": "1111",
 }
 
 BaseManager.set_connection(database_settings=DB_SETTINGS)

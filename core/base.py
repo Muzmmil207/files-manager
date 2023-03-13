@@ -1,17 +1,11 @@
 import random
 import string
-import sys
 from datetime import datetime
-from pathlib import Path
-
-# BASE_DIR = Path(__file__).resolve().parent.parent
-# print(BASE_DIR)
-# sys.path.append('/Users/MyPc/Desktop/master/oop/files manager')
-# sys.path.append('../')
 from models import FileModel
 
 
-class File:
+class TextFile:
+    format = "txt"
     def __init__(self, name=None, content=[]):
         self.name = name or default_name()
         self.content = content
@@ -42,11 +36,6 @@ class File:
         return "files/{0}/{1}.{0}".format(self.format, self.name)
 
 
-class TextFile(File):
-    format = "txt"
-
-    def __init__(self, name, content):
-        super().__init__(name, content)
 
 
 def default_name(length=8):
